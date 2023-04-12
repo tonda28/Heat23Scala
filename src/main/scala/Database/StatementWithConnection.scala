@@ -18,7 +18,6 @@ class StatementWithConnection {
           ResultSet.CONCUR_READ_ONLY
         )
         val result = f(statement)
-        //connection.close()
         result
       }.get
 
