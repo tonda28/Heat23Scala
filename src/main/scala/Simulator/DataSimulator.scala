@@ -1,6 +1,6 @@
-package Database
+package Simulator
 
-import SetDataRepository.{ModelTableSummary, ModelTableSwitch}
+import Database.SetDataRepository.{ModelTableSummary, ModelTableSwitch}
 
 import java.time.temporal.ChronoUnit
 import java.time.{Duration, LocalDate, LocalDateTime}
