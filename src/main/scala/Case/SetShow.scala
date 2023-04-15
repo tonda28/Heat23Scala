@@ -1,6 +1,6 @@
-package Set
+package Case
 
-import Set.SetOutput.{CaseDuration, CaseMenuMonthSelector, CaseModelMenuDaySelector, CaseReview}
+import Case.SetOutput.{CaseDuration, CaseMenuMonthSelector, CaseModelMenuDaySelector, CaseReview}
 
 object SetShow {
   case class CaseShow(

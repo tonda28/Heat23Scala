@@ -1,6 +1,6 @@
 package Workbench
 
-import Database.{DataRepository, GivensDataRepository, SetDataRepository}
+import Database.{DataRepository, SetDataRepository}
 import Simulator.DataSimulator
 import Simulator.SetSimulator.CaseSimulatorSumTable
 

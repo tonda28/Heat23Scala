@@ -1,9 +1,9 @@
 package Logic
 
-import Set.SetSeasonTime.given_CaseMarkerHeatingSeason
-import Database.GivensDataRepository.given_CaseRepository
-import Set.SetShow.CaseShow
-import Set.SetShowJson.CaseShowJson
+import Case.SetSeasonTime.given_CaseMarkerHeatingSeason
+import Case.SetShow.CaseShow
+import Case.SetShowJson.CaseShowJson
+import Database.DataRepository
 
 import java.time.LocalDate
 
@@ -19,19 +19,24 @@ class ApplyInterfaceOne(selectedDate: String)
   def myDt = LocalDate.of(year, month, day).toString
 
   val date = LocalDate.parse(myDt)
+  val dataRepo = new DataRepository()
+  val dataSwitch = dataRepo.durationSwitchOn
+  val dataSum = dataRepo.dailyTrafficSummary
 
   val show = CaseShow.apply(
-    selectDay = getMenuDaySelector(date),
-    selectMonth = getMenuMonthSelector,
-    showFrameDailyDetails = getFrameDailyDetailsReview(date),
-    showLabelDuration = getLabelDuration(date)
+    selectDay = getMenuDaySelector(date, dataSum),
+    selectMonth = getMenuMonthSelector(dataSwitch),
+    showFrameDailyDetails = getFrameDailyDetailsReview(date, dataSwitch),
+    showLabelDuration = getLabelDuration(date, dataSwitch)
   )
 
   val showJson = CaseShowJson.apply(
-    selectMonthJson = getMenuMonthSelectorJson(getMenuMonthSelector),
-    selectDayJson = getMenuDaySelectorJson(getMenuDaySelector(date)),
+    selectMonthJson =
+      getMenuMonthSelectorJson(getMenuMonthSelector(dataSwitch)),
+    selectDayJson = getMenuDaySelectorJson(getMenuDaySelector(date, dataSum)),
     showFrameDailyDetailsJson =
-      getDailyDetailsReviewJson(getFrameDailyDetailsReview(date)),
-    showLabelDurationJson = getLabelDurationJson(getLabelDuration(date))
+      getDailyDetailsReviewJson(getFrameDailyDetailsReview(date, dataSwitch)),
+    showLabelDurationJson =
+      getLabelDurationJson(getLabelDuration(date, dataSwitch))
   )
 }

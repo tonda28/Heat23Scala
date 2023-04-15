@@ -1,7 +1,7 @@
 package Utility
 
 import Database.SetDataRepository.ModelTableSwitch
-import Set.SetOutput.CaseReview
+import Case.SetOutput.CaseReview
 
 import java.time.Duration
 import scala.collection.mutable.ListBuffer

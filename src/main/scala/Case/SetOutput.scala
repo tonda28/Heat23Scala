@@ -1,4 +1,4 @@
-package Set
+package Case
 
 import Logic.Output
 import little.json.JsonValue

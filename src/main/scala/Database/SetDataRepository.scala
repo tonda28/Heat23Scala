@@ -15,8 +15,8 @@ object SetDataRepository {
       duration: Duration
   )
 
-  case class CaseRepository(
-      dataDailySum: Seq[ModelTableSummary],
-      dataSwitchOn: Seq[ModelTableSwitch]
-  )
+//  case class CaseRepository(
+//      dataDailySum: Seq[ModelTableSummary],
+//      dataSwitchOn: Seq[ModelTableSwitch]
+//  )
 }

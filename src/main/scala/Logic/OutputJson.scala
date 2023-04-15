@@ -1,6 +1,6 @@
 package Logic
 
-import Set.SetOutput.{CaseDuration, CaseMenuMonthSelector, CaseModelMenuDaySelector, CaseReview}
+import Case.SetOutput.{CaseDuration, CaseMenuMonthSelector, CaseModelMenuDaySelector, CaseReview}
 import little.json.Implicits.{iterableToJsonArray, stringToJsonString}
 import little.json.{Json, JsonOutput, JsonValue}
 trait OutputJson {
