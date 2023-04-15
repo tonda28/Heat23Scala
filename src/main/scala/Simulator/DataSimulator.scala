@@ -1,8 +1,5 @@
 package Simulator
 
-import Database.SetDataRepository.{ModelTableSummary, ModelTableSwitch}
-import Simulator.SetSimulator.CaseSimulatorSumTable
-
 import java.time.temporal.ChronoUnit
 import java.time.{Duration, LocalDate, LocalDateTime}
 import scala.collection.mutable.ListBuffer
@@ -12,7 +9,9 @@ import scala.util.Random
 
 class DataSimulator {
 
-  def simulateSumTable(sim: CaseSimulatorSumTable): Seq[ModelTableSummary] = {
+  def simulateSumTable(
+      sim: Simulator.SummaryTable
+  ): Seq[Database.ModelTableSummary] = {
 
     var i = 1
     var duration = Duration.ofSeconds(10000)
@@ -27,10 +26,13 @@ class DataSimulator {
     val rowsHowMany = ChronoUnit.DAYS.between(dayStart, dayStop) + 1
     var day = dayStart
 
-    val l = ListBuffer[ModelTableSummary]()
+    val l = ListBuffer[Database.ModelTableSummary]()
     while (i <= rowsHowMany) {
       duration = Duration.ofSeconds(new Random().between(10000, 13000))
-      l += ModelTableSummary.apply(localdate = day, duration = duration)
+      l += Database.ModelTableSummary.apply(
+        localdate = day,
+        duration = duration
+      )
       day = day.plusDays(1)
       i += 1
     }
@@ -58,10 +60,10 @@ class DataSimulator {
     val rowsHowMany = setRecordsRows
 
     val l =
-      ListBuffer[ModelTableSwitch]()
+      ListBuffer[Database.ModelTableSwitch]()
     var i = 1
     while (i <= rowsHowMany && dateTimeStart.toLocalDate <= localdateEnd) {
-      l += ModelTableSwitch(
+      l += Database.ModelTableSwitch(
         stav = stavStart,
         temper = temper,
         localtime = dateTimeStart.toLocalTime,

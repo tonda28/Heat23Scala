@@ -1,14 +1,5 @@
 package Logic
 
-import Database.SetDataRepository.{ModelTableSummary, ModelTableSwitch}
-import Case.SetOutput.{
-  CaseDuration,
-  CaseMenuMonthSelector,
-  CaseModelMenuDaySelector,
-  CaseReview
-}
-import Case.SetSeasonTime.CaseMarkerHeatingSeason
-
 import java.time.LocalDate
 import scala.collection.mutable.ListBuffer
 import scala.math.Ordered.orderingToOrdered
@@ -20,13 +11,13 @@ trait Output
     with Utility.Calculator {
 
   def getMenuMonthSelector(
-      data: Seq[ModelTableSwitch]
-  ): Seq[CaseMenuMonthSelector] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Case.MenuMonthSelector] = {
 
     val a = data.groupBy(identity(x => x.localdate.getMonthValue)).keys.toSeq
-    var result = ListBuffer[CaseMenuMonthSelector]()
+    val result = ListBuffer[Case.MenuMonthSelector]()
     for (item <- a) {
-      result += CaseMenuMonthSelector.apply(
+      result += Case.MenuMonthSelector.apply(
         date = data
           .filter(x => x.localdate.getMonthValue == item)
           .head
@@ -39,16 +30,16 @@ trait Output
 
   def getMenuDaySelector(
       date: LocalDate,
-      data: Seq[ModelTableSummary]
-  ): Seq[CaseModelMenuDaySelector] = {
+      data: Seq[Database.ModelTableSummary]
+  ): Seq[Case.MenuDaySelector] = {
     val dataBasic = data.filter(x =>
       x.localdate.getYear == date.getYear
         &&
         x.localdate.getMonth == date.getMonth
     )
-    val result = ListBuffer[CaseModelMenuDaySelector]()
+    val result = ListBuffer[Case.MenuDaySelector]()
     for (item <- dataBasic)
-      result += CaseModelMenuDaySelector(
+      result += Case.MenuDaySelector(
         localdate = item.localdate,
         duration = item.duration
       )
@@ -57,8 +48,8 @@ trait Output
 
   def getFrameDailyDetailsReview(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[CaseReview] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Case.FrameReview] = {
     Try {
       validateSingleDay(date, data)
     }.map(getReview(_)).get
@@ -66,11 +57,11 @@ trait Output
 
   def getLabelDuration(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[CaseDuration] = {
-    var l = ListBuffer[CaseDuration]()
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Case.LabelDuration] = {
+    val l = ListBuffer[Case.LabelDuration]()
     Try { validateSingleDay(date, data) }.map(calculate(_)).get
-    l += CaseDuration(
+    l += Case.LabelDuration(
       Try { validateSingleDay(date, data) }.map(calculate(_)).get,
       Try { validateSingleSeason(data) }.map(calculate(_)).get,
       Try { validateSingleMonth(date, data) }.map(calculate(_)).get

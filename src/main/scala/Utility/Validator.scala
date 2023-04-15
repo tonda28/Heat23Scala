@@ -1,7 +1,5 @@
 package Utility
 
-import Database.SetDataRepository.ModelTableSwitch
-
 import java.time.{LocalDate, LocalTime}
 import scala.collection.immutable.Seq
 import scala.util.Try
@@ -10,8 +8,8 @@ trait Validator {
 
   private def setSingleDay(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
         x.localdate.getYear() == date.getYear && x._4
@@ -22,8 +20,8 @@ trait Validator {
 
   private def setSingleMonth(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
         x.localdate.getYear() == date.getYear && x._4
@@ -31,26 +29,37 @@ trait Validator {
           .getMonthValue()
       )
   }
+
   private def setSingleSeason(
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = { data }
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = { data }
 
   private def setDefaultRecords(
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] =
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] =
     if (data.size < 1) {
-      Seq[ModelTableSwitch](
-        ModelTableSwitch(1, 0, LocalTime.of(0, 0, 2), LocalDate.of(2022, 1, 1)),
-        ModelTableSwitch(0, 0, LocalTime.of(0, 0, 3), LocalDate.of(2022, 1, 1))
+      Seq[Database.ModelTableSwitch](
+        Database.ModelTableSwitch(
+          1,
+          0,
+          LocalTime.of(0, 0, 2),
+          LocalDate.of(2022, 1, 1)
+        ),
+        Database.ModelTableSwitch(
+          0,
+          0,
+          LocalTime.of(0, 0, 3),
+          LocalDate.of(2022, 1, 1)
+        )
       )
     } else {
       data
     }
   private def setLastMandatoryRecord(
-      checkLast: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      checkLast: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     if (checkLast.last.stav != 0) {
-      checkLast :+ ModelTableSwitch(
+      checkLast :+ Database.ModelTableSwitch(
         0,
         6.22,
         LocalTime
@@ -63,9 +72,9 @@ trait Validator {
   }
 
   private def setFirstMandatoryRecord(
-      checkFirst: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = if (checkFirst.head.stav != 1) {
-    ModelTableSwitch(
+      checkFirst: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = if (checkFirst.head.stav != 1) {
+    Database.ModelTableSwitch(
       1,
       6.22,
       LocalTime.of(0, 0, 1),
@@ -77,8 +86,8 @@ trait Validator {
 
   def validateSingleDay(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     Try {
       setSingleDay(date, data)
     }
@@ -90,8 +99,8 @@ trait Validator {
 
   def validateSingleMonth(
       date: LocalDate,
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     Try {
       setSingleMonth(date, data)
     }
@@ -102,8 +111,8 @@ trait Validator {
   }
 
   def validateSingleSeason(
-      data: Seq[ModelTableSwitch]
-  ): Seq[ModelTableSwitch] = {
+      data: Seq[Database.ModelTableSwitch]
+  ): Seq[Database.ModelTableSwitch] = {
     Try { setSingleSeason(data) }
       .map(setDefaultRecords)
       .map(setLastMandatoryRecord)

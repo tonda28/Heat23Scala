@@ -1,12 +1,8 @@
 package Case
 
-import Case.SetOutput.{CaseDuration, CaseMenuMonthSelector, CaseModelMenuDaySelector, CaseReview}
-
-object SetShow {
-  case class CaseShow(
-      selectDay: Seq[CaseModelMenuDaySelector],
-      selectMonth: Seq[CaseMenuMonthSelector],
-      showFrameDailyDetails: Seq[CaseReview],
-      showLabelDuration: Seq[CaseDuration]
-  )
-}
+case class Show(
+    selectDay: Seq[Case.MenuDaySelector],
+    selectMonth: Seq[Case.MenuMonthSelector],
+    showFrameDailyDetails: Seq[Case.FrameReview],
+    showLabelDuration: Seq[Case.LabelDuration]
+)

@@ -1,10 +1,5 @@
 package Logic
 
-import Case.SetSeasonTime.given_CaseMarkerHeatingSeason
-import Case.SetShow.CaseShow
-import Case.SetShowJson.CaseShowJson
-import Database.DataRepository
-
 import java.time.LocalDate
 
 class ApplyInterfaceOne(selectedDate: String)
@@ -19,18 +14,18 @@ class ApplyInterfaceOne(selectedDate: String)
   def myDt = LocalDate.of(year, month, day).toString
 
   val date = LocalDate.parse(myDt)
-  val dataRepo = new DataRepository()
+  val dataRepo = new Database.DataRepository()
   val dataSwitch = dataRepo.durationSwitchOn
   val dataSum = dataRepo.dailyTrafficSummary
 
-  val show = CaseShow.apply(
+  val show = Case.Show.apply(
     selectDay = getMenuDaySelector(date, dataSum),
     selectMonth = getMenuMonthSelector(dataSwitch),
     showFrameDailyDetails = getFrameDailyDetailsReview(date, dataSwitch),
     showLabelDuration = getLabelDuration(date, dataSwitch)
   )
 
-  val showJson = CaseShowJson.apply(
+  val showJson = Case.CaseShowJson.apply(
     selectMonthJson =
       getMenuMonthSelectorJson(getMenuMonthSelector(dataSwitch)),
     selectDayJson = getMenuDaySelectorJson(getMenuDaySelector(date, dataSum)),
