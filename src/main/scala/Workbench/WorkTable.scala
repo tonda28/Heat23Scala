@@ -1,13 +1,25 @@
 package Workbench
 
-import Database.{DataRepository, SetDataRepository}
+import Database.{DataRepository, GivensDataRepository, SetDataRepository}
+import Simulator.DataSimulator
+import Simulator.SetSimulator.CaseSimulatorSumTable
 
 import java.time.LocalDate
 
-object WorkTable extends Logic.Output {
-  val ld = LocalDate.of(2022,1,28)
-  val obj = new Database.DataRepository()
-  //val a = obj.durationSwitchOn
-  import Database.GivensDataRepository.given_CaseRepository
-  def a = getMenuDaySelector(ld)
+object WorkTable extends App {
+
+  val l = CaseSimulatorSumTable.apply(
+    setFirstDate = (2022, 10, 1),
+    setLastDate = (2022, 11, 30)
+  )
+  val ll = CaseSimulatorSumTable.apply(
+    setFirstDate = (2023, 1, 1),
+    setLastDate = (2023, 2, 25)
+  )
+  val obj = new DataSimulator()
+  val a = obj.simulateSumTable(ll)
+  println(a)
+
+//  val b = GivensDataRepository.given_CaseRepository.dataDailySum
+//  println(b)
 }

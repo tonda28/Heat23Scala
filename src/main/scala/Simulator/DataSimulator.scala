@@ -1,6 +1,7 @@
 package Simulator
 
 import Database.SetDataRepository.{ModelTableSummary, ModelTableSwitch}
+import Simulator.SetSimulator.CaseSimulatorSumTable
 
 import java.time.temporal.ChronoUnit
 import java.time.{Duration, LocalDate, LocalDateTime}
@@ -11,20 +12,22 @@ import scala.util.Random
 
 class DataSimulator {
 
-  def simulateSumTable(
-      setFirstDate: Tuple3[Int, Int, Int],
-      setLastDate: Tuple3[Int, Int, Int]
-  ): Seq[ModelTableSummary] = {
+  def simulateSumTable(sim: CaseSimulatorSumTable): Seq[ModelTableSummary] = {
 
     var i = 1
     var duration = Duration.ofSeconds(10000)
-    var dayStart =
-      LocalDate.of(setFirstDate._1, setFirstDate._2, setFirstDate._3)
-    var dayStop = LocalDate.of(setLastDate._1, setLastDate._2, setLastDate._3)
-    var rowsHowMany = ChronoUnit.DAYS.between(dayStart, dayStop) + 1
+    val dayStart =
+      LocalDate.of(
+        sim.setFirstDate._1,
+        sim.setFirstDate._2,
+        sim.setFirstDate._3
+      )
+    val dayStop =
+      LocalDate.of(sim.setLastDate._1, sim.setLastDate._2, sim.setLastDate._3)
+    val rowsHowMany = ChronoUnit.DAYS.between(dayStart, dayStop) + 1
     var day = dayStart
 
-    var l = ListBuffer[ModelTableSummary]()
+    val l = ListBuffer[ModelTableSummary]()
     while (i <= rowsHowMany) {
       duration = Duration.ofSeconds(new Random().between(10000, 13000))
       l += ModelTableSummary.apply(localdate = day, duration = duration)
@@ -36,12 +39,12 @@ class DataSimulator {
 
   def simulateSwitchTable(
       setFirstStav: Int,
-      setDateFirst: Tuple6[Int, Int, Int, Int, Int, Int],
-      setDateLast: Tuple3[Int, Int, Int],
+      setDateFirst: (Int, Int, Int, Int, Int, Int),
+      setDateLast: (Int, Int, Int),
       setRecordsRows: Int
   ) = {
     var stavStart = setFirstStav
-    var temper = 4.44
+    val temper = 4.44
     var dateTimeStart = LocalDateTime.of(
       setDateFirst._1,
       setDateFirst._2,
@@ -50,11 +53,11 @@ class DataSimulator {
       setDateFirst._5,
       setDateFirst._6
     )
-    var localdateEnd =
+    val localdateEnd =
       LocalDate.of(setDateLast._1, setDateLast._2, setDateLast._3)
-    var rowsHowMany = setRecordsRows
+    val rowsHowMany = setRecordsRows
 
-    var l =
+    val l =
       ListBuffer[ModelTableSwitch]()
     var i = 1
     while (i <= rowsHowMany && dateTimeStart.toLocalDate <= localdateEnd) {
