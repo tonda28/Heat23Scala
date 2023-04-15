@@ -1,10 +1,10 @@
-package Logic
+package User
 
 import little.json.Implicits.{iterableToJsonArray, stringToJsonString}
 import little.json.{Json, JsonOutput, JsonValue}
 trait OutputJson {
 
-  def getMenuMonthSelectorJson[A <: Case.MenuMonthSelector, B >: JsonValue](data: Seq[A]): B = {
+  def getMenuMonthSelectorJson[A <: MenuMonthSelector, B >: JsonValue](data: Seq[A]): B = {
     given ModelSummaryToJson: JsonOutput[A] with
       def apply(u: A) =
         Json.obj(
@@ -13,7 +13,7 @@ trait OutputJson {
     Json.toJson(data)
   }
 
-  def getMenuDaySelectorJson[A <: Case.MenuDaySelector, B >: JsonValue](data: Seq[A]): B = {
+  def getMenuDaySelectorJson[A <: MenuDaySelector, B >: JsonValue](data: Seq[A]): B = {
     given ModelSummaryToJson: JsonOutput[A] with
       def apply(date: A) =
         Json.obj(
@@ -23,9 +23,9 @@ trait OutputJson {
     Json.toJson(data)
   }
 
-  def getDailyDetailsReviewJson(data: Seq[Case.FrameReview]) = {
-    given ModelReviewToJson: JsonOutput[Case.FrameReview] with
-      def apply(u: Case.FrameReview) =
+  def getDailyDetailsReviewJson(data: Seq[FrameReview]) = {
+    given ModelReviewToJson: JsonOutput[FrameReview] with
+      def apply(u: FrameReview) =
         Json.obj(
           "on" -> u.on.toString,
           "off" -> u.off.toString,
@@ -35,10 +35,10 @@ trait OutputJson {
     Json.toJson(data)
   }
 
-  def getLabelDurationJson(data: Seq[Case.LabelDuration]) = {
+  def getLabelDurationJson(data: Seq[LabelDuration]) = {
 
-    given Sum: JsonOutput[Case.LabelDuration] with
-      def apply(u: Case.LabelDuration) =
+    given Sum: JsonOutput[LabelDuration] with
+      def apply(u: LabelDuration) =
         Json.obj(
           "day" -> u.dayDuration.toString,
           "month" -> u.monthDuration.toString,

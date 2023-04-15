@@ -1,4 +1,4 @@
-package Case
+package User
 
 import little.json.{JsonOutput, JsonValue}
 

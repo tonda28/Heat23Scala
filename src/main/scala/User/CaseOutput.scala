@@ -1,6 +1,6 @@
-package Case
+package User
 
-import Logic.Output
+import User.Output
 import little.json.JsonValue
 
 import java.time.{Duration, LocalDate, LocalTime, Month}

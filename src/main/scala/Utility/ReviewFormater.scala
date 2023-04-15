@@ -1,7 +1,6 @@
 package Utility
 
-import Case.FrameReview
-
+import User.FrameReview
 import java.time.Duration
 import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success, Try}
