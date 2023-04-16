@@ -1,5 +1,7 @@
 package User
 
+import Database.DataRepository
+
 import java.time.LocalDate
 
 class ApplyInterfaceOne(selectedDate: String)
@@ -9,9 +11,8 @@ class ApplyInterfaceOne(selectedDate: String)
 
   val date: LocalDate = parse(selectedDate)
 
-  val dataRepo = new Database.DataRepository()
-  val dataSwitch = dataRepo.durationSwitchOn
-  val dataSum = dataRepo.dailyTrafficSummary
+  val dataSwitch = Database.Table.switch
+  val dataSum = Database.Table.summary
 
   val show = Show.apply(
     selectDay = getMenuDaySelector(date, dataSum),

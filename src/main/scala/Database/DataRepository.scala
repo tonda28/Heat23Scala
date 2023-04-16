@@ -10,7 +10,7 @@ class DataRepository {
 
  private val conn = new StatementWithConnection()
 
-  val durationSwitchOn: Seq[ModelTableSwitch] =
+  val tableSwith: Seq[ModelTableSwitch] =
     Try {
       Try {
         conn.withConnection(statement =>
@@ -43,7 +43,7 @@ class DataRepository {
 
 
 
-  val dailyTrafficSummary: Seq[Database.ModelTableSummary] =
+  val tableSummary: Seq[Database.ModelTableSummary] =
     Try {
       Try {
         conn.withConnection(statement =>

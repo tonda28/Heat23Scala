@@ -13,3 +13,9 @@ case class ModelTableSummary(
     localdate: LocalDate,
     duration: Duration
 )
+
+object Table {
+  val repository = new Database.DataRepository()
+  val switch: Seq[ModelTableSwitch] = repository.tableSwith
+  val summary: Seq[ModelTableSummary] = repository.tableSummary
+}

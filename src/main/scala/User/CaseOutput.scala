@@ -1,8 +1,5 @@
 package User
 
-import User.Output
-import little.json.JsonValue
-
 import java.time.{Duration, LocalDate, LocalTime, Month}
 
 case class MenuMonthSelector(
@@ -25,4 +22,18 @@ case class LabelDuration(
     dayDuration: Duration,
     monthDuration: Duration,
     allDuration: Duration
+)
+
+case class Show(
+    selectDay: Seq[MenuDaySelector],
+    selectMonth: Seq[MenuMonthSelector],
+    showFrameDailyDetails: Seq[FrameReview],
+    showLabelDuration: Seq[LabelDuration]
+)
+
+case class CaseShowJson(
+    selectMonthJson: little.json.JsonValue,
+    selectDayJson: little.json.JsonValue,
+    showFrameDailyDetailsJson: little.json.JsonValue,
+    showLabelDurationJson: little.json.JsonValue
 )
