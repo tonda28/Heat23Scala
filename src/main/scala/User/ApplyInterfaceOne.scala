@@ -1,6 +1,6 @@
 package User
 
-import Database.DataRepository
+import Database.{DataRepository, ModelTableSummary, ModelTableSwitch}
 
 import java.time.LocalDate
 
@@ -10,9 +10,8 @@ class ApplyInterfaceOne(selectedDate: String)
     with Utility.Parser {
 
   val date: LocalDate = parse(selectedDate)
-
-  val dataSwitch = Database.Table.switch
-  val dataSum = Database.Table.summary
+  val dataSwitch: Seq[ModelTableSwitch] = Database.Table.switch
+  val dataSum: Seq[ModelTableSummary] = Database.Table.summary
 
   val show = Show.apply(
     selectDay = getMenuDaySelector(date, dataSum),
