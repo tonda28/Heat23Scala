@@ -1,5 +1,5 @@
 import Database.DataRepository
-import Logic.{ApplyInterfaceOne, OutputJson, Output}
+import User.{ApplyInterfaceOne, OutputJson, Output}
 
 import java.time.LocalDate
 

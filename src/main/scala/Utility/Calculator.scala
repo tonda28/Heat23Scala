@@ -1,11 +1,9 @@
 package Utility
 
-import Database.SetDataRepository.ModelTableSwitch
-
 import java.time.{Duration, LocalTime}
 
 trait Calculator {
-  def calculate(data: Seq[ModelTableSwitch]): Duration = {
+  def calculate(data: Seq[Database.ModelTableSwitch]): Duration = {
     def isEven(number: Int) = number % 2 == 0
 
     def isOdd(number: Int) = !isEven(number)

@@ -1,14 +1,12 @@
 package Utility
 
-import Database.SetDataRepository.ModelTableSwitch
-import Set.SetOutput.CaseReview
-
+import User.FrameReview
 import java.time.Duration
 import scala.collection.mutable.ListBuffer
 import scala.util.{Failure, Success, Try}
 
 trait ReviewFormater {
-  private def checkValidation[B <: ModelTableSwitch](dataValidated: Seq[B]): Seq[B] = {
+  private def checkValidation(dataValidated: Seq[Database.ModelTableSwitch]): Seq[Database.ModelTableSwitch] = {
     Try {
       assert(dataValidated.head.stav == 1)
       assert(dataValidated.last.stav == 0)
@@ -17,7 +15,7 @@ trait ReviewFormater {
       case Success(value) => dataValidated
   }
 
-  private def reformatToReview[B <: ModelTableSwitch, C >: CaseReview](dataValidated: Seq[B]): Seq[C] = {
+  private def reformatToReview[C >: FrameReview](dataValidated: Seq[Database.ModelTableSwitch]): Seq[C] = {
 
     def isEven(number: Int) = number % 2 == 0
 
@@ -32,17 +30,17 @@ trait ReviewFormater {
     val duration =
       evenIsStop zip oddIsStart map (x => Duration.between(x._1, x._2))
     val temper = odd.map(x => x.temper)
-    var result = ListBuffer[CaseReview]()
+    var result = ListBuffer[FrameReview]()
     oddIsStart zip evenIsStop zip duration zip temper map {
       case (((a, b), c), d) =>
         // {(a, b, c, d)
-        result += CaseReview(on = a, off = b, duration = c, temper = d)
+        result += FrameReview(on = a, off = b, duration = c, temper = d)
     }
 
     result.toSeq
   }
 
-  def getReview(dataValidated: Seq[ModelTableSwitch]): Seq[CaseReview] = {
+  def getReview(dataValidated: Seq[Database.ModelTableSwitch]): Seq[FrameReview] = {
     reformatToReview(checkValidation(dataValidated))
   }
   

@@ -1,7 +1,6 @@
 package Database
 
 import Database.StatementWithConnection
-import SetDataRepository.{ModelTableSummary, ModelTableSwitch}
 
 import java.sql.{DriverManager, ResultSet, Statement}
 import java.time.{Duration, LocalDate, LocalTime}
@@ -11,7 +10,7 @@ class DataRepository {
 
  private val conn = new StatementWithConnection()
 
-  val durationSwitchOn: Seq[ModelTableSwitch] =
+  val tableSwith: Seq[ModelTableSwitch] =
     Try {
       Try {
         conn.withConnection(statement =>
@@ -39,12 +38,12 @@ class DataRepository {
         println("DataSwitch are on the stage!")
         value
       case Failure(exception) => println(exception)
-        Seq[Database.SetDataRepository.ModelTableSwitch]()
+        Seq[Database.ModelTableSwitch]()
 
 
 
 
-  val dailyTrafficSummary: Seq[ModelTableSummary] =
+  val tableSummary: Seq[Database.ModelTableSummary] =
     Try {
       Try {
         conn.withConnection(statement =>
@@ -70,5 +69,5 @@ class DataRepository {
         println("DataSummary are on the stage!")
         value
       case Failure(exception) => println(exception)
-        Seq[Database.SetDataRepository.ModelTableSummary]()
+        Seq[Database.ModelTableSummary]()
 }
