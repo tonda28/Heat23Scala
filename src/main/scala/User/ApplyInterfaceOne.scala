@@ -4,16 +4,11 @@ import java.time.LocalDate
 
 class ApplyInterfaceOne(selectedDate: String)
     extends User.Output
-    with User.OutputJson {
+    with User.OutputJson
+    with Utility.Parser {
 
-  val arrDate = selectedDate.split("-")
-  val year = arrDate(0).toInt
-  val month = arrDate(1).toInt
-  val day = arrDate(2).toInt
+  val date: LocalDate = parse(selectedDate)
 
-  def myDt = LocalDate.of(year, month, day).toString
-
-  val date = LocalDate.parse(myDt)
   val dataRepo = new Database.DataRepository()
   val dataSwitch = dataRepo.durationSwitchOn
   val dataSum = dataRepo.dailyTrafficSummary
