@@ -1,3 +1,5 @@
+package Simulator
+
 import org.scalatest.funsuite
 import org.scalatest.funsuite.AnyFunSuite
 
@@ -20,6 +22,15 @@ class DataSimulatorTest extends AnyFunSuite {
     }.map(x => obj.simulateSumTable(x))
       .map(simulatedSeq => assert(simulatedSeq.size == 0))
   }
+
+  test("Bad number of year-month-day should have throw exception") {
+    val s = Simulator.SummaryTable.apply((2022, 105, 2), (2022, 101, 2))
+    assertThrows[DateTimeException] {
+      obj.simulateSumTable(s)
+    }
+  }
+
+  // Switch table tests
 
   test("simulateSwitchTable - first row stav is set on 1") {
     Try {
@@ -57,6 +68,19 @@ class DataSimulatorTest extends AnyFunSuite {
       )
     }
       .map(obj.simulateSwitchTable)
-      .map(x => assert(x.head.localtime == LocalDateTime.of(2022, 10, 1,1,1,1)))
+      .map(x =>
+        assert(x.head.localtime == LocalDateTime.of(2022, 10, 1, 1, 1, 1))
+      )
+  }
+  test("Bad number of month-day should have throw exception") {
+    val s = Simulator.SwitchTable.apply(
+      1,
+      (2022, 105, 2, 1, 1, 1),
+      (2022, 10, 2),
+      50000
+    )
+    assertThrows[DateTimeException] {
+      obj.simulateSwitchTable(s)
+    }
   }
 }

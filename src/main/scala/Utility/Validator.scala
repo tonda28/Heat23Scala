@@ -2,7 +2,9 @@ package Utility
 
 import java.time.{LocalDate, LocalTime}
 import scala.collection.immutable.Seq
+import scala.collection.immutable.Stream.{Empty, empty}
 import scala.util.Try
+import scala.xml.Null
 
 trait Validator {
 
@@ -64,7 +66,7 @@ trait Validator {
         6.22,
         LocalTime
           .of(23, 59, 59),
-        LocalDate.of(2022, 1, 1)
+        LocalDate.now
       )
     } else {
       checkLast
@@ -78,7 +80,7 @@ trait Validator {
       1,
       6.22,
       LocalTime.of(0, 0, 1),
-      LocalDate.of(2022, 1, 1)
+      LocalDate.now()
     ) +: checkFirst
   } else {
     checkFirst
