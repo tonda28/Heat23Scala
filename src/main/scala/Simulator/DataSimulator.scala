@@ -1,7 +1,10 @@
 package Simulator
 
+import Database.ModelTableSwitch
+
 import java.time.temporal.ChronoUnit
 import java.time.{Duration, LocalDate, LocalDateTime}
+import scala.annotation.unused
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.duration.DAYS
 import scala.math.Ordered.orderingToOrdered
@@ -39,25 +42,27 @@ class DataSimulator {
     l.toSeq
   }
 
+  @unused
   def simulateSwitchTable(
-      setFirstStav: Int,
-      setDateFirst: (Int, Int, Int, Int, Int, Int),
-      setDateLast: (Int, Int, Int),
-      setRecordsRows: Int
-  ) = {
-    var stavStart = setFirstStav
+      sim: Simulator.SwitchTable
+      //      setFirstStav: Int,
+//      setDateFirst: (Int, Int, Int, Int, Int, Int),
+//      setDateLast: (Int, Int, Int),
+//      setRecordsRows: Int
+  ): Seq[ModelTableSwitch] = {
+    var stavStart = sim.setStav
     val temper = 4.44
     var dateTimeStart = LocalDateTime.of(
-      setDateFirst._1,
-      setDateFirst._2,
-      setDateFirst._3,
-      setDateFirst._4,
-      setDateFirst._5,
-      setDateFirst._6
+      sim.setDateTimeFirst._1,
+      sim.setDateTimeFirst._2,
+      sim.setDateTimeFirst._3,
+      sim.setDateTimeFirst._4,
+      sim.setDateTimeFirst._5,
+      sim.setDateTimeFirst._6
     )
     val localdateEnd =
-      LocalDate.of(setDateLast._1, setDateLast._2, setDateLast._3)
-    val rowsHowMany = setRecordsRows
+      LocalDate.of(sim.setDateLast._1, sim.setDateLast._2, sim.setDateLast._3)
+    val rowsHowMany = sim.setRecordRows
 
     val l =
       ListBuffer[Database.ModelTableSwitch]()

@@ -2,7 +2,9 @@ package Utility
 
 import java.time.{LocalDate, LocalTime}
 import scala.collection.immutable.Seq
+
 import scala.util.Try
+import scala.xml.Null
 
 trait Validator {
 
@@ -12,9 +14,7 @@ trait Validator {
   ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
-        x.localdate.getYear() == date.getYear && x._4
-          .getMonthValue() == date
-          .getMonthValue() && x.localdate.getDayOfMonth == date.getDayOfMonth
+        x.localdate.getYear == date.getYear && x._4.getMonthValue == date.getMonthValue && x.localdate.getDayOfMonth == date.getDayOfMonth
       )
   }
 
@@ -24,9 +24,7 @@ trait Validator {
   ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
-        x.localdate.getYear() == date.getYear && x._4
-          .getMonthValue() == date
-          .getMonthValue()
+        x.localdate.getYear == date.getYear && x._4.getMonthValue == date.getMonthValue
       )
   }
 
@@ -64,7 +62,7 @@ trait Validator {
         6.22,
         LocalTime
           .of(23, 59, 59),
-        LocalDate.of(2022, 1, 1)
+        LocalDate.now
       )
     } else {
       checkLast
@@ -78,7 +76,7 @@ trait Validator {
       1,
       6.22,
       LocalTime.of(0, 0, 1),
-      LocalDate.of(2022, 1, 1)
+      LocalDate.now()
     ) +: checkFirst
   } else {
     checkFirst

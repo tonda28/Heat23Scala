@@ -9,18 +9,18 @@ class ApplyInterfaceOne(selectedDate: String)
     with User.OutputJson
     with Utility.Parser {
 
-  val date: LocalDate = parse(selectedDate)
-  val dataSwitch: Seq[ModelTableSwitch] = Database.Table.switch
-  val dataSum: Seq[ModelTableSummary] = Database.Table.summary
+  private val date: LocalDate = parse(selectedDate)
+  private val dataSwitch: Seq[ModelTableSwitch] = Database.Table.switch
+  private val dataSum: Seq[ModelTableSummary] = Database.Table.summary
 
-  val show = Show.apply(
+  val show: Show = Show.apply(
     selectDay = getMenuDaySelector(date, dataSum),
     selectMonth = getMenuMonthSelector(dataSwitch),
     showFrameDailyDetails = getFrameDailyDetailsReview(date, dataSwitch),
     showLabelDuration = getLabelDuration(date, dataSwitch)
   )
 
-  val showJson = CaseShowJson.apply(
+  val showJson: CaseShowJson = CaseShowJson.apply(
     selectMonthJson =
       getMenuMonthSelectorJson(getMenuMonthSelector(dataSwitch)),
     selectDayJson = getMenuDaySelectorJson(getMenuDaySelector(date, dataSum)),
