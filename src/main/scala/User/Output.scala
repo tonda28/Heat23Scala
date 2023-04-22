@@ -9,7 +9,7 @@ trait Output
     extends Utility.Validator
     with Utility.ReviewFormater
     with Utility.Calculator {
-
+  // TODO: Make tests
   def getMenuMonthSelector(
       data: Seq[Database.ModelTableSwitch]
   ): Seq[MenuMonthSelector] = {
@@ -52,7 +52,7 @@ trait Output
   ): Seq[FrameReview] = {
     Try {
       validateSingleDay(date, data)
-    }.map(getReview(_)).get
+    }.map(format(_)).get
   }
 
   def getLabelDuration(

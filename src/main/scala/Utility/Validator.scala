@@ -2,7 +2,7 @@ package Utility
 
 import java.time.{LocalDate, LocalTime}
 import scala.collection.immutable.Seq
-import scala.collection.immutable.Stream.{Empty, empty}
+
 import scala.util.Try
 import scala.xml.Null
 
@@ -14,9 +14,7 @@ trait Validator {
   ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
-        x.localdate.getYear() == date.getYear && x._4
-          .getMonthValue() == date
-          .getMonthValue() && x.localdate.getDayOfMonth == date.getDayOfMonth
+        x.localdate.getYear == date.getYear && x._4.getMonthValue == date.getMonthValue && x.localdate.getDayOfMonth == date.getDayOfMonth
       )
   }
 
@@ -26,9 +24,7 @@ trait Validator {
   ): Seq[Database.ModelTableSwitch] = {
     data
       .filter(x =>
-        x.localdate.getYear() == date.getYear && x._4
-          .getMonthValue() == date
-          .getMonthValue()
+        x.localdate.getYear == date.getYear && x._4.getMonthValue == date.getMonthValue
       )
   }
 

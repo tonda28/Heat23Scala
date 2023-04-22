@@ -7,26 +7,26 @@ import java.time.{DateTimeException, LocalDate, LocalDateTime, LocalTime}
 import scala.util.Try
 class DataSimulatorTest extends AnyFunSuite {
 
-  val obj = new Simulator.DataSimulator()
+  val simulator = new Simulator.DataSimulator()
 
   test("Number of rows according to range.") {
     Try {
       Simulator.SummaryTable.apply((2022, 10, 1), (2022, 10, 2))
-    }.map(obj.simulateSumTable)
+    }.map(simulator.simulateSumTable)
       .map(simulatedSeq => assert(simulatedSeq.size == 2))
   }
 
   test("Last date is smaller then last") {
     Try {
       Simulator.SummaryTable.apply((2022, 10, 1), (2022, 9, 2))
-    }.map(x => obj.simulateSumTable(x))
+    }.map(x => simulator.simulateSumTable(x))
       .map(simulatedSeq => assert(simulatedSeq.size == 0))
   }
 
   test("Bad number of year-month-day should have throw exception") {
-    val s = Simulator.SummaryTable.apply((2022, 105, 2), (2022, 101, 2))
+    val summaryTable = Simulator.SummaryTable.apply((2022, 105, 2), (2022, 101, 2))
     assertThrows[DateTimeException] {
-      obj.simulateSumTable(s)
+      simulator.simulateSumTable(summaryTable)
     }
   }
 
@@ -41,7 +41,7 @@ class DataSimulatorTest extends AnyFunSuite {
         setRecordRows = 50000
       )
     }
-      .map(obj.simulateSwitchTable)
+      .map(simulator.simulateSwitchTable)
       .map(x => assert(x.head.stav == 1))
   }
 
@@ -54,7 +54,7 @@ class DataSimulatorTest extends AnyFunSuite {
         setRecordRows = 50000
       )
     }
-      .map(obj.simulateSwitchTable)
+      .map(simulator.simulateSwitchTable)
       .map(x => assert(x.head.localdate == LocalDate.of(2022, 11, 1)))
   }
 
@@ -67,7 +67,7 @@ class DataSimulatorTest extends AnyFunSuite {
         setRecordRows = 50000
       )
     }
-      .map(obj.simulateSwitchTable)
+      .map(simulator.simulateSwitchTable)
       .map(x =>
         assert(x.head.localtime == LocalDateTime.of(2022, 10, 1, 1, 1, 1))
       )
@@ -80,7 +80,7 @@ class DataSimulatorTest extends AnyFunSuite {
       50000
     )
     assertThrows[DateTimeException] {
-      obj.simulateSwitchTable(s)
+      simulator.simulateSwitchTable(s)
     }
   }
 }

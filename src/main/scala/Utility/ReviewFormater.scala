@@ -12,7 +12,7 @@ trait ReviewFormater {
       assert(dataValidated.last.stav == 0)
     } match
       case Failure(exception) => Failure(exception).get
-      case Success(value) => dataValidated
+      case Success(_) => dataValidated
   }
 
   private def reformatToReview[C >: FrameReview](dataValidated: Seq[Database.ModelTableSwitch]): Seq[C] = {
@@ -30,17 +30,17 @@ trait ReviewFormater {
     val duration =
       evenIsStop zip oddIsStart map (x => Duration.between(x._1, x._2))
     val temper = odd.map(x => x.temper)
-    var result = ListBuffer[FrameReview]()
+    val result = ListBuffer[FrameReview]()
     oddIsStart zip evenIsStop zip duration zip temper map {
       case (((a, b), c), d) =>
-        // {(a, b, c, d)
+        // {(setTable, switchTable, c, d)
         result += FrameReview(on = a, off = b, duration = c, temper = d)
     }
 
     result.toSeq
   }
 
-  def getReview(dataValidated: Seq[Database.ModelTableSwitch]): Seq[FrameReview] = {
+  def format(dataValidated: Seq[Database.ModelTableSwitch]): Seq[FrameReview] = {
     reformatToReview(checkValidation(dataValidated))
   }
   
