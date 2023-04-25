@@ -45,10 +45,6 @@ class DataSimulator {
   @unused
   def simulateSwitchTable(
       sim: Simulator.SwitchTable
-      //      setFirstStav: Int,
-//      setDateFirst: (Int, Int, Int, Int, Int, Int),
-//      setDateLast: (Int, Int, Int),
-//      setRecordsRows: Int
   ): Seq[ModelTableSwitch] = {
     var stavStart = sim.setStav
     val temper = 4.44

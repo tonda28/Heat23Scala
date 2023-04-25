@@ -15,7 +15,7 @@ trait ReviewFormater {
       case Success(_) => dataValidated
   }
 
-  private def reformatToReview[C >: FrameReview](dataValidated: Seq[Database.ModelTableSwitch]): Seq[C] = {
+  private def reformatToReviewStyle(dataValidated: Seq[Database.ModelTableSwitch]) = {
 
     def isEven(number: Int) = number % 2 == 0
 
@@ -41,7 +41,7 @@ trait ReviewFormater {
   }
 
   def format(dataValidated: Seq[Database.ModelTableSwitch]): Seq[FrameReview] = {
-    reformatToReview(checkValidation(dataValidated))
+    reformatToReviewStyle(checkValidation(dataValidated))
   }
   
 }
