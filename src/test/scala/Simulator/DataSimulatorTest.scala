@@ -9,14 +9,14 @@ class DataSimulatorTest extends AnyFunSuite {
 
   val simulator = new Simulator.DataSimulator()
 
-  test("Number of rows according to range.") {
+  test("Number of rows according to range should by 2") {
     Try {
       Simulator.SummaryTable.apply((2022, 10, 1), (2022, 10, 2))
     }.map(simulator.simulateSumTable)
       .map(simulatedSeq => assert(simulatedSeq.size == 2))
   }
 
-  test("Last date is smaller then last") {
+  test("If last date is smaller then first, rows should be 0") {
     Try {
       Simulator.SummaryTable.apply((2022, 10, 1), (2022, 9, 2))
     }.map(x => simulator.simulateSumTable(x))

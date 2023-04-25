@@ -9,14 +9,14 @@ trait Output
     extends Utility.Validator
     with Utility.ReviewFormater
     with Utility.Calculator {
-  // TODO: Make tests
+
   def getMenuMonthSelector(
       data: Seq[Database.ModelTableSwitch]
   ): Seq[MenuMonthSelector] = {
 
-    val a = data.groupBy(identity(x => x.localdate.getMonthValue)).keys.toSeq
+    val dataForMenu = data.groupBy(identity(x => x.localdate.getMonthValue)).keys.toSeq
     val result = ListBuffer[MenuMonthSelector]()
-    for (item <- a) {
+    for (item <- dataForMenu) {
       result += User.MenuMonthSelector.apply(
         date = data
           .filter(x => x.localdate.getMonthValue == item)
@@ -25,20 +25,20 @@ trait Output
       )
     }
 
-    result.toList.sortBy(x => x.date)
+    result.toList.sortBy(_.date)
   }
 
   def getMenuDaySelector(
       date: LocalDate,
       data: Seq[Database.ModelTableSummary]
   ): Seq[MenuDaySelector] = {
-    val dataBasic = data.filter(x =>
+    val dataForMenu = data.filter(x =>
       x.localdate.getYear == date.getYear
         &&
         x.localdate.getMonth == date.getMonth
     )
     val result = ListBuffer[MenuDaySelector]()
-    for (item <- dataBasic)
+    for (item <- dataForMenu)
       result += User.MenuDaySelector(
         localdate = item.localdate,
         duration = item.duration
@@ -52,7 +52,7 @@ trait Output
   ): Seq[FrameReview] = {
     Try {
       validateSingleDay(date, data)
-    }.map(format(_)).get
+    }.map(format).get
   }
 
   def getLabelDuration(
@@ -60,11 +60,11 @@ trait Output
       data: Seq[Database.ModelTableSwitch]
   ): Seq[LabelDuration] = {
     val l = ListBuffer[LabelDuration]()
-    Try { validateSingleDay(date, data) }.map(calculate(_)).get
+    Try { validateSingleDay(date, data) }.map(calculate).get
     l += User.LabelDuration(
-      Try { validateSingleDay(date, data) }.map(calculate(_)).get,
-      Try { validateSingleSeason(data) }.map(calculate(_)).get,
-      Try { validateSingleMonth(date, data) }.map(calculate(_)).get
+      Try { validateSingleDay(date, data) }.map(calculate).get,
+      Try { validateSingleSeason(data) }.map(calculate).get,
+      Try { validateSingleMonth(date, data) }.map(calculate).get
     )
     l.toSeq
   }

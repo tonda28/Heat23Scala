@@ -10,10 +10,10 @@ class OutputTest extends AnyFunSuite with Output {
 
   test("Select months for menu.") {
     val a = Simulator.SwitchTable.apply(
-      1,
-      (2022, 10, 1, 1, 1, 1),
-      (2023, 4, 30),
-      50000
+      setStav = 1,
+      setDateTimeFirst = (2022, 10, 1, 1, 1, 1),
+      setDateLast = (2023, 4, 30),
+      setRecordRows = 50000
     )
     val switchTable = simulator.simulateSwitchTable(a)
     val testedData = getMenuMonthSelector(switchTable)
@@ -22,7 +22,7 @@ class OutputTest extends AnyFunSuite with Output {
     assert(testedData.last.date == LocalDate.of(2023, 4, 1))
   }
 
-  test("Select day for menu.") {
+  test("Select day for menu. ") {
     val day = LocalDate.of(2023, 1, 28)
     val a = Simulator.SummaryTable.apply(
       setFirstDate = (2022, 10, 1),
@@ -35,13 +35,13 @@ class OutputTest extends AnyFunSuite with Output {
     assert(testedData.last.localdate == LocalDate.of(2023, 1, 31))
   }
 
-  test("DetailReview format.") {
+  test("DetailReview - new format.") {
     val day = LocalDate.of(2023, 1, 28)
     val setSimulator = Simulator.SwitchTable.apply(
-      1,
-      (2022, 10, 1, 1, 1, 1),
-      (2023, 4, 30),
-      30000
+      setStav = 1,
+      setDateTimeFirst = (2022, 10, 1, 1, 1, 1),
+      setDateLast = (2023, 4, 30),
+      setRecordRows = 50000
     )
     val switchTable = simulator.simulateSwitchTable(setSimulator)
     val testedData = getFrameDailyDetailsReview(day, switchTable)
