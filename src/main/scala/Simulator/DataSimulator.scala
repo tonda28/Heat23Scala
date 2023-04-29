@@ -127,15 +127,15 @@ class DataSimulator {
 
     val tableSwitch =
       ListBuffer[Database.ModelTableSwitch]()
-    var ii = 1
-    while (ii <= HowManyDays && dateTimeStart.toLocalDate <= dayStop) {
+    //var ii = 1
+    while (dateTimeStart.toLocalDate <= dayStop) {
       tableSwitch += Database.ModelTableSwitch(
         stav = stavStart,
         temper = temper,
         localtime = dateTimeStart.toLocalTime,
         localdate = dateTimeStart.toLocalDate
       )
-      ii += 1
+      // ii += 1
 
       stavStart =
         if (stavStart == 1) 0
