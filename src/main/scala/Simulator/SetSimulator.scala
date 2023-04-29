@@ -11,3 +11,8 @@ case class SwitchTable(
     setDateLast: (Int, Int, Int),
     setRecordRows: Int
 )
+case class IndexTable(
+    setFirstDate: (Int, Int, Int),
+    setLastDate: (Int, Int, Int),
+    setIndex: Int
+)

@@ -83,4 +83,71 @@ class DataSimulator {
     l.toSeq
   }
 
+  def simulateIndex(sim: Simulator.IndexTable) = {
+
+    val dayStart = LocalDate.of(
+      sim.setFirstDate._1,
+      sim.setFirstDate._2,
+      sim.setFirstDate._3
+    )
+    val dayStop = LocalDate.of(
+      sim.setLastDate._1,
+      sim.setLastDate._2,
+      sim.setLastDate._3
+    )
+
+    var dateTimeStart = LocalDateTime.of(
+      sim.setFirstDate._1,
+      sim.setFirstDate._2,
+      sim.setFirstDate._3,
+      1,
+      1,
+      1
+    )
+
+    val minus = sim.setIndex
+    val HowManyDays = ChronoUnit.DAYS.between(dayStart, dayStop) + 1
+    val temper = 4.44
+    var duration = Duration.ofSeconds(10000)
+    var day = dayStart
+    var stavStart = 1
+
+    val tableSummary = ListBuffer[Database.ModelTableSummary]()
+    var i = 1
+    while (i <= HowManyDays - minus) {
+      duration = Duration.ofSeconds(new Random().between(10000, 13000))
+      tableSummary += Database.ModelTableSummary.apply(
+        localdate = day,
+        duration = duration
+      )
+      day = day.plusDays(1)
+      i += 1
+    }
+    tableSummary.toSeq
+
+    val tableSwitch =
+      ListBuffer[Database.ModelTableSwitch]()
+    //var ii = 1
+    while (dateTimeStart.toLocalDate <= dayStop) {
+      tableSwitch += Database.ModelTableSwitch(
+        stav = stavStart,
+        temper = temper,
+        localtime = dateTimeStart.toLocalTime,
+        localdate = dateTimeStart.toLocalDate
+      )
+      // ii += 1
+
+      stavStart =
+        if (stavStart == 1) 0
+        else 1
+
+      dateTimeStart =
+        if (stavStart != 1) dateTimeStart.plusSeconds(70)
+        else dateTimeStart.plusSeconds(780)
+    }
+    tableSwitch.toSeq
+
+    (tableSwitch.toSeq, tableSummary.toSeq)
+
+  }
 }
