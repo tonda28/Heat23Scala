@@ -7,7 +7,8 @@ import java.time.LocalDate
 class ApplyInterfaceOne(selectedDate: String)
     extends User.Output
     with User.OutputJson
-    with Utility.Parser {
+    with Utility.Parser
+    {
 
   private val date: LocalDate = parse(selectedDate)
   private val dataSwitch: Seq[ModelTableSwitch] = Database.Table.switch
@@ -29,4 +30,6 @@ class ApplyInterfaceOne(selectedDate: String)
     showLabelDurationJson =
       getLabelDurationJson(getLabelDuration(date, dataSwitch))
   )
-}
+
+    
+    }

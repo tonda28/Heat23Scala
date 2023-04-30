@@ -4,8 +4,8 @@ import java.time.Duration
 
 trait Pointer {
   def point(
-      dataSummaryTable: List[Database.ModelTableSummary],
-      dataSwitchTable: List[Database.ModelTableSwitch]
+      dataSummaryTable: Seq[Database.ModelTableSummary],
+      dataSwitchTable: Seq[Database.ModelTableSwitch]
   ) = {
     val columnWithDate =
       dataSwitchTable.groupBy(x => x.localdate).keys.toList.sorted
